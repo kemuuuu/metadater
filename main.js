@@ -49,10 +49,27 @@ ipc.on('fetch-obj', (event, arg) => {
       console.log(err)
       event.returnValue = 'Error...'
     }
-    writeFile(arg.path, JSON.stringify(metadata))
+    console.log(arg.csv)
+    if (arg.csv) {
+      const csvData = mtdt2csv(metadata)
+      writeFile(arg.path, csvData)
+    } else {
+      writeFile(arg.path, JSON.stringify(metadata))
+    }
     event.returnValue = 'SUCCESS'
-  });
+  })
 })
+
+const mtdt2csv = data => {
+  let oneline = '';
+  const fields = data.fields
+  let csvData = fields.map((f,i) => {
+    oneline = f.fullName + ',' + f.label + ',' + f.type + '\n'
+    return oneline;
+  })
+  csvData.unshift('"Api参照名","表示ラベル","データ型"\n');
+  return csvData;
+}
 
 
 const writeFile = (path, data) => {

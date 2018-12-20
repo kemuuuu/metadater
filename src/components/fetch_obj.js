@@ -1,5 +1,5 @@
 import React from 'react'
-import { Label, Button, FormGroup, FormControl, ControlLabel } from 'react-bootstrap'
+import { Label, Button, FormGroup, FormControl, ControlLabel, Checkbox } from 'react-bootstrap'
 import { ipcRenderer } from 'electron'
 
 export default class FetchObj extends React.Component {
@@ -9,6 +9,7 @@ export default class FetchObj extends React.Component {
     this.state = {
       obj: '',
       path: '',
+      csv: false,
     }
   }
 
@@ -22,6 +23,10 @@ export default class FetchObj extends React.Component {
 
   handleChange(e) {
     this.setState({[e.target.name] : e.target.value})
+  }
+
+  handleCheck(e) {
+    this.setState({csv: e.target.checked})
   }
 
   render() {
@@ -53,6 +58,11 @@ export default class FetchObj extends React.Component {
               value={this.state.path}
               onChange={e => this.handleChange(e)}
             />
+            <Checkbox
+              name="csv"
+              onChange={e => this.handleCheck(e)}
+              checked={this.state.csv}
+            >Convert to CSV</Checkbox>
             <div className="btn">
               <Button bsStyle="primary" onClick={e => this.handleClick()}>Fetch!!</Button>
             </div>
