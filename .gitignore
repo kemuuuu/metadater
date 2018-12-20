@@ -1,0 +1,6 @@
+node_modules/
+out/
+metadater-darwin-x64/
+metadater-win32-x64/
+
+package-lock.json
