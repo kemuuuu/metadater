@@ -61,13 +61,11 @@ ipc.on('fetch-obj', (event, arg) => {
 })
 
 const mtdt2csv = data => {
-  let oneline = '';
+  let csvData = '"Api参照名","表示ラベル","データ型"\n';
   const fields = data.fields
-  let csvData = fields.map((f,i) => {
-    oneline = f.fullName + ',' + f.label + ',' + f.type + '\n'
-    return oneline;
+  fields.forEach(f => {
+    csvData += '"' + f.fullName + '"' + ',' + '"' + f.label + '"' + ',' + '"' + f.type + '"' + '\n'
   })
-  csvData.unshift('"Api参照名","表示ラベル","データ型"\n');
   return csvData;
 }
 
